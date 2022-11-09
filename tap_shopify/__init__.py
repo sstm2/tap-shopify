@@ -17,7 +17,7 @@ from tap_shopify.exceptions import ShopifyError
 from tap_shopify.streams.base import shopify_error_handling, get_request_timeout
 import tap_shopify.streams # Load stream objects into Context
 
-REQUIRED_CONFIG_KEYS = ["shop", "api_key"]
+REQUIRED_CONFIG_KEYS = ["shop", "version", "api_key"]
 LOGGER = singer.get_logger()
 SDC_KEYS = {'id': 'integer', 'name': 'string', 'myshopify_domain': 'string'}
 
@@ -25,7 +25,7 @@ SDC_KEYS = {'id': 'integer', 'name': 'string', 'myshopify_domain': 'string'}
 def initialize_shopify_client():
     api_key = Context.config['api_key']
     shop = Context.config['shop']
-    version = '2022-01'
+    version = Context.config['version']
     session = shopify.Session(shop, version, api_key)
     shopify.ShopifyResource.activate_session(session)
 
